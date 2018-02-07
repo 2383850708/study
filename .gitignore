@@ -1,0 +1,6 @@
+.htaccess
+composer.json
+/Applic_ation/Rumtime/Cache
+/Applic_ation/Rumtime/Data
+/Applic_ation/Rumtime/Logs
+/Applic_ation/Rumtime/Temp
