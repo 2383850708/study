@@ -14,4 +14,8 @@ class MenuController extends AuthController {
     	
     }
 
+    public function insert()
+    {
+        
+    }
 }
