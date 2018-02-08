@@ -9,5 +9,9 @@ class MenuController extends AuthController {
         $this->display();
     }
 
+    public function add()
+    {
+    	
+    }
 
 }
