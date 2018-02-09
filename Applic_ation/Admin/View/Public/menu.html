@@ -59,40 +59,47 @@
                     <!-- <li>
                         <a class="J_menuItem" href="layouts.html"><i class="fa fa-columns"></i> <span class="nav-label">布局</span></a>
                     </li> -->
-                    <foreach name="data" item="v">
-                    <empty name="v['_data']">
-                        <li>
-                            <a href="#">
-                                <i class="fa fa fa-bar-chart-o"></i>
-                                <span class="nav-label">{$v['name']}</span>
-                                <span class="fa arrow"></span>
-                            </a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a class="J_menuItem" href="graph_echarts.html">百度ECharts</a>
-                                </li>
-                                <li>
-                                    <a class="J_menuItem" href="graph_flot.html">Flot</a>
-                                </li>
-                                <li>
-                                    <a class="J_menuItem" href="graph_morris.html">Morris.js</a>
-                                </li>
-                                <li>
-                                    <a class="J_menuItem" href="graph_rickshaw.html">Rickshaw</a>
-                                </li>
-                                <li>
-                                    <a class="J_menuItem" href="graph_peity.html">Peity</a>
-                                </li>
-                                <li>
-                                    <a class="J_menuItem" href="graph_sparkline.html">Sparkline</a>
-                                </li>
-                                <li>
-                                    <a class="J_menuItem" href="graph_metrics.html">图表组合</a>
-                                </li>
-                            </ul>
-                        </li>
-                        </empty>
-                    </foreach>
+     
+                    
+                    <li>
+
+                        <a href="#">
+                            <i class="fa fa fa-bar-chart-o"></i>
+                            <span class="nav-label">系统设置</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="{:U('Menu/index')}">菜单管理</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="graph_flot.html">Flot</a>
+                            </li>
+                      
+                        </ul>
+                    </li>
+
+                    <li>
+
+                        <a href="#">
+                            <i class="fa fa-expeditedssl"></i>
+                            <span class="nav-label">权限控制</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="{:U('Rule/index')}">权限管理</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="graph_flot.html">用户组管理</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="graph_flot.html">管理员列表</a>
+                            </li>
+                      
+                        </ul>
+                    </li>
+                       
                 </ul>
             </div>
         </nav>

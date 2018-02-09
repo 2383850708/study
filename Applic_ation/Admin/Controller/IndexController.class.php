@@ -11,6 +11,7 @@ class IndexController extends AuthController {
 			);
 
 		$this->assign($assign);
+		//print_r($assign);exit;
 		$this->display();
     }
 
