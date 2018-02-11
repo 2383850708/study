@@ -81,13 +81,15 @@
 									<tbody> 
 										<foreach name="cats" item="vo" >								   
 										<tr class="gradeA even"> 
-											<td class="">{$vo.fuhao}{$vo.title}</td> 
+											<td class="" >{$vo.fuhao}{$vo.title}</td> 
 											<td class=" ">{$vo.name}</td> 
-											<td class=" ">{$vo.status}</td> 
-											<td class=" ">
+											<td class=" " >											
+                                        		<input id="checkbox1" <if condition='$vo.status eq 1'>checked="checked"</if> type="checkbox">
+											</td> 
+											<td class=" " >
 											<span style='cursor: pointer; '  onclick="subjiedian_add({$vo.id},'{$vo.title}','{$vo.name}')" class="label label-primary">添加子节点</span>
 											<span style='cursor: pointer; '  onclick="edit({$vo.id},{$vo.pid},'{$vo.title}','{$vo.name}')" class="label label-warning">修改</span>
-											<span style='cursor: pointer; ' onclick='del({$vo.id})' class="label label-danger">删除</span>
+											<span style='cursor: pointer; ' onclick='del(this,{$vo.id})' class="label label-danger">删除</span>
 											</td>
 										</tr>
 										</foreach>
@@ -152,14 +154,15 @@
 			   success: function(obj){
 			    	if(obj.status==1)
 			    	{
-			    		swal({
-							  title: obj.msg,
-							  text: "",
-							  icon: "success",
-							  button: "确定",
-							  
-							});
-			    		
+		    		swal({
+						  title: obj.msg,
+						  text: "",
+						  icon: "success",
+						  button: "确定",							  
+						},function(){
+							location.reload();
+						});
+
 			    	}
 			    	else
 			    	{
@@ -172,11 +175,7 @@
 							});
 			    	}
 			    	
-			    	/*if(a)
-			    	{
-			    		location.reload();
-			    	}
-			    	*/
+			    	
 			   }
 			});
 	}
@@ -217,9 +216,9 @@
         });
     });
 
-	function del(id)
+	function del(obj,id)
 	{
-
+		var object = $(obj);
 		swal({
         title: "您确定要删除这条信息吗",
         text: "删除后将无法恢复，请谨慎操作！",
@@ -227,6 +226,7 @@
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
         confirmButtonText: "删除",
+        cancelButtonText: "取消",
         closeOnConfirm: false
     	}, function () {
         $.ajax({
@@ -236,13 +236,31 @@
 			   dataType:'json',
 			   success: function(obj)
 			   {
-			   		alert(obj.msg);
-			    	
+			   		if(obj.status==1)
+			   		{			   			
+			   			swal(obj.msg, '',"success");
+			   			object.closest('tr').remove();			   			
+			   		}
+			   		else
+			   		{
+						swal(obj.msg, '',"error");
+			   		}	    	
 			   }
 			});
     	});
 		
 	}
+
+
+
+
+    $(document).ready(function () {
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+    });
+
 
 </script>
 

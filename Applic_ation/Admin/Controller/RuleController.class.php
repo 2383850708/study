@@ -74,9 +74,36 @@ class RuleController extends AuthController
         $this->ajaxReturn($data);
     }
 
+    /**
+     * 权限删除
+     * @Author   wyk
+     * @DateTime 2018-02-11
+     */
     public function delete()
     {
-        print_r($_POST);exit;
+        $id = I('post.id');
+        $data = array();
+
+        $res = M('auth_rule')->where('pid='.$id)->find();
+
+        if($res)
+        {
+            $data['status'] = 0;
+            $data['msg'] = '下有子类，不能删除';
+            $this->ajaxReturn($data);
+        }
+        $res = M('auth_rule')->delete($id);
+        if($res)
+        {
+            $data['status'] = 1;
+            $data['msg'] = '删除成功';
+        }
+        else
+        {
+            $data['status'] = 0;
+            $data['msg'] = '删除失败';
+        }
+        $this->ajaxReturn($data);
     }
 
     public function rule_list()
@@ -86,4 +113,6 @@ class RuleController extends AuthController
     	$this->assign('list',$list);
     	$this->display();
     }
+
+  
 }
