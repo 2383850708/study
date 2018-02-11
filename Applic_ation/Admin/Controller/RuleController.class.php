@@ -1,54 +1,82 @@
 <?php
 namespace Admin\Controller;
 use Common\Controller\AuthController;
-class RuleController extends AuthController {
+class RuleController extends AuthController 
+{
+    static public $treeList = array();
     public function index()
     {
-
+        $cats = D('AuthRule')->sel_all();
+        $this->assign('cats',$cats);
         $this->display();
-    }
-
-    public function add()
-    {
-    	$model = D('AuthRule');
-    	$tree=$model->getTreeRule();
-    	$this->assign('tree',$tree);
-    	$this->display();
     }
 
     public function insert()
     {
+
     	$model = D('AuthRule');
-    	      
+    	$data = array();
 		if($model->create(I('POST.'),1))
 		{
 			$res = $model->add();
 			if($res)
 			{
-				echo '添加成功';
+				$data['status'] = 1;
+                $data['msg'] = '添加成功';
 			}
 			else
 			{
-				echo '添加失败';
+				$data['status'] = 0;
+                $data['msg'] ='添加失败';
 			}
 		}
 		else
-		{
-			$this->error($model->getError());
+		{          
+			$data['status'] = 0;
+            $data['msg'] = $model->getError();
 		}
+        
+        $this->ajaxReturn($data);
     }
 
-    public function _before_insert()
+    /**
+     * 权限修改
+     */
+    public function update()
     {
-    	$status=I('post.status');
-        if($status=='on')
+        $model = D('AuthRule');
+        $data = array();
+        $result = array();
+        $condition = array();
+        if($model->create(I('POST.'),2))
         {
-            $_POST['status']=1;
+            $condition['id'] = I('post.id');
+            $result['name'] = I('post.name');
+            $result['title'] = I('post.title');
+            $res = $model->where($condition)->save($result);
+            if($res!== false)
+            {
+                $data['status'] = 1;
+                $data['msg'] = '修改成功';
+            }
+            else
+            {
+                $data['status'] = 0;
+                $data['msg'] ='修改失败';
+            }
         }
         else
-        {
-            $_POST['status']=0;
-        }    
+        {          
+            $data['status'] = 0;
+            $data['msg'] = $model->getError();
+        }
+        
+        $this->ajaxReturn($data);
+    }
+
+    public function delete()
+    {
+        print_r($_POST);exit;
     }
 
     public function rule_list()
