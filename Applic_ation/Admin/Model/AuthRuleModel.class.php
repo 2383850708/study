@@ -46,6 +46,7 @@ class AuthRuleModel extends Model
         return $data;  
     }  
 
+    
   
 }
 
