@@ -35,8 +35,8 @@ class AuthRuleModel extends Model
                 else
                 {
                     $str = '| &nbsp;&nbsp;&nbsp;';
-                    $title = $str.str_repeat('|——', $level);
-                    $v['fuhao'] = $title;
+                    $title = str_repeat($str, $level);
+                    $v['fuhao'] = $title.'|—';
                 }
                 
                 $data[] = $v;  

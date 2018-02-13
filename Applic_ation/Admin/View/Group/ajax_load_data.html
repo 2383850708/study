@@ -16,8 +16,8 @@
 			</td> 
 			<td class=" " >
 			<span style='cursor: pointer; ' onclick='del(this,{$vo.id})' class="label label-danger">删除</span>
-			<span style='cursor: pointer; '  onclick="edit({$vo.id},{$vo.pid},'{$vo.title}','{$vo.name}')" class="label label-warning">修改</span>
-			<span style='cursor: pointer; '  onclick="subjiedian_add({$vo.id},'{$vo.title}','{$vo.name}')" class="label label-primary">分配权限</span>
+			<span style='cursor: pointer; '  onclick="edit({$vo.id},'{$vo.title}')" class="label label-warning">修改</span>
+			<a  href="{:U('Group/rule_group',array('id'=>$vo['id']))}" class="label label-primary">分配权限</a>
 			<span style='cursor: pointer; ' class="label label-info">添加成员</span>
 			</td>
 		</tr>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<include file="Public:head" title="权限分配"/>
+</head>
+<body>
+	<div class="row">
+            <div class="col-sm-12">
+                <div class="bjy-admin-nav" style="margin-bottom: 10px">
+                    <a href="{:U('Admin/Index/index')}"><i class="fa fa-home"></i> 首页</a> &gt; <a href="{:U('Admin/Group/index')}">用户组管理</a>&gt;权限分配
+                </div>
+                 <h1 style="text-align: center;font-weight: bold;">为<span style='color:red'>{$group_data.title}</span>分配权限</h1>
+                <div class="ibox-content">
+                <empty name="result">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td colspan="2">请先添加权限</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <else/>
+                    <form action="{:U('Group/rule_group')}" method="post">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <foreach name='result' item='vo'>
+                                <tr class='b-group'>                              
+                                    <td width="10%">
+                                    <label>{$vo.title}&nbsp;<input type="checkbox" name='rule_ids[]' <if condition="in_array($vo['id'],$group_data['rules'])">checked="checked"</if> value="{$vo.id}" onclick="checkAll(this)"  ></label>
+                                    </td> 
+                            
+                                    <td>     
+                                        <foreach name='vo.children' item='two'>                                       
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr class="b-group">                              
+                                                    <td width="10%">
+                                                    <label>{$two.title}&nbsp;<input type="checkbox" name='rule_ids[]' value="{$two.id}" <if condition="in_array($two['id'],$group_data['rules'])">checked="checked"</if> onclick="checkAll(this)"></label>
+                                                    </td> 
+                                                    <td>
+                                                        <foreach name='two.children' item='three'>
+                                                            <label>{$three.title}&nbsp;<input type="checkbox" name='rule_ids[]'  <if condition="in_array($three['id'],$group_data['rules'])">checked="checked"</if> value="{$three.id}"></label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        </foreach>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        </foreach>
+                                    </td>
+                                </tr>
+                                </foreach>
+                                <tr>
+                                    <td></td>
+                                    <td><button  class="btn btn-w-m btn-primary">提交</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <input type="hidden" name='id' value='{$group_data.id}'>
+                    </form>
+                </empty>
+                </div>
+            </div>
+        </div>
+</body>
+<include file="Public/foot" />
+
+<load href="__PUBLIC__/H+/js/plugins/iCheck/icheck.min.js" />
+
+<script>
+
+    function checkAll(obj) 
+    {   
+        $(obj).parents('.b-group').eq(0).find("input[type='checkbox']").prop('checked', $(obj).prop('checked'));
+    }
+    $(document).ready(function () {
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+    });
+</script>
+
+</html>
