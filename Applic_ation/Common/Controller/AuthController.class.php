@@ -6,13 +6,18 @@ class AuthController extends Controller
 {
 	protected function _initialize()
 	{
-		
 		if(empty(session('user')))
 		{
-			$this->error('请先登陆！',U('Login/index'), C('LONG_JUMP_TIME'));			
+			//$this->error('请先登陆！',U('Login/index'), C('LONG_JUMP_TIME'));	
+            redirect(U('Login/index'));	
 		}
-		//$auth = new Auth();
-		
+		$auth = new Auth();
+		$rule_name=MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME;
+        //echo $rule_name ;
+        $result=$auth->check($rule_name,session('user.user_id'));
+        /*if(!$result){
+            $this->error('您没有权限访问');
+        }*/
 	}
 
 	/**

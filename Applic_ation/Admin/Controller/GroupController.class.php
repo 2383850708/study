@@ -157,7 +157,6 @@ class GroupController extends AuthController
 	{
 		if(IS_POST)
 		{			
-			print_r(I('post.'));exit;
 			$map = array();
 			$map['id'] = I('post.id');
 			$data = array();

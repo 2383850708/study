@@ -31,7 +31,8 @@ class AdminController extends AuthController
 		$id = I('post.id');
 		$data = array();
 		$loginInfo = parent::getLoginInfo();
-		$res = M('auth_group_access')->delete($id);
+
+		$res = M('auth_group_access')->where(array('uid'=>$id))->delete();
 		if($res)
 		{			
 			$data['status'] = 1;
@@ -63,6 +64,7 @@ class AdminController extends AuthController
 		$data = array();
 		$userid = I('post.userid','');
 		$rules = I('post.rules',array());
+
 		if(empty($userid))
 		{
 			$data['status'] = 0;
@@ -104,6 +106,7 @@ class AdminController extends AuthController
 			$data['status'] = 0;
 			$data['msg'] = '添加失败';
 		}
+
 		$this->ajaxReturn($data);
 	}
 
