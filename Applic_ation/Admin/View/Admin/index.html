@@ -8,12 +8,66 @@
 
 	<!-- 拟态框 -->
 
-	<div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
+ 	<div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" >
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">添加用户权限</h4>
+                <!-- <small class="font-bold">这里可以显示副标题。</small> -->
+            </div>
+        	<div class="modal-body"  style="background: white">
+        		<form  class="form-horizontal" onsubmit="return false">
+					<div class="form-group">
+					    <label class="col-sm-3 control-label" style="text-align:right" >用户组名：</label>
+					    <div class="col-sm-6" >
+					        <select class="form-control m-b" name="userid" value=''>
+								<foreach name='user' item='v'>
+                                        <option value='{$v.id}'>{$v.username}</option>
+                                    </foreach>
+                                </select>
+					    </div>
+					</div>
+         			<div class="hr-line-dashed"></div>
+         			<div class="form-group">
+					    <label class="col-sm-3 control-label" style="text-align:right" >管理组：</label>
+					    <div class="col-sm-6" >
+							<foreach name='group' item='vo'>	
+					        <label class="checkbox-inline i-checks">
+                                        <div class="icheckbox_square-green" style="position: relative;">
+                                        <input type="checkbox" value="{$vo.id}" name='rules[]' style="position: absolute; opacity: 0;">
+                                        <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
+                                        </ins>
+                                        </div>
+                                        {$vo.title}
+                                </label>
+                                </foreach>
+					    </div>
+					</div>
+         			<div class="hr-line-dashed"></div>
+
+         			<input type='hidden'  id='type' value='0'>
+         			<input type='hidden'  id='id' name='id' value=''>
+         		</form>
+            	</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary"  onclick='add()'>保存</button>
+            </div>
+        </div>
+    </div>
+</div> 
+
+	<!-- 拟态框结束 -->
+
+	<!-- 拟态框修改 -->
+
+	<div class="modal inmodal fade" id="myModal5_edit" tabindex="-1" role="dialog"  aria-hidden="true">
 	    <div class="modal-dialog modal-lg">
 	        <div class="modal-content">
 	            <div class="modal-header" >
 	                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	                <h4 class="modal-title">添加用户权限</h4>
+	                <h4 class="modal-title">修改用户权限</h4>
 	                <!-- <small class="font-bold">这里可以显示副标题。</small> -->
 	            </div>
 	        	<div class="modal-body"  style="background: white">
@@ -31,28 +85,20 @@
 	         			<div class="hr-line-dashed"></div>
 	         			<div class="form-group">
 						    <label class="col-sm-3 control-label" style="text-align:right" >管理组：</label>
-						    <div class="col-sm-6" >
-								<foreach name='group' item='vo'>	
-						        <label class="checkbox-inline i-checks">
-                                        <div class="icheckbox_square-green" style="position: relative;">
-	                                        <input type="checkbox" value="{$vo.id}" name='rules[]' style="position: absolute; opacity: 0;">
-	                                        <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
-	                                        </ins>
-                                        </div>
-                                        {$vo.title}
-                                </label>
-                                </foreach>
+						    <div class="col-sm-6 " >
+									     
+                                <div class="checkbox i-checks group">
+                                        
+                                </div>
 						    </div>
 						</div>
 	         			<div class="hr-line-dashed"></div>
 
-	         			<input type='hidden'  id='type' value='0'>
-	         			<input type='hidden'  id='id' name='id' value=''>
 	         		</form>
             	</div>
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-	                <button type="button" class="btn btn-primary"  onclick='add()'>保存</button>
+	                <button type="button" class="btn btn-primary"  onclick='update()'>保存</button>
 	            </div>
 	        </div>
 	    </div>
@@ -73,7 +119,7 @@
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="tabs_panels.html#tab-4" aria-expanded="true">用户权限列表</a>
                                 </li>
-                                <li class=""><button type="button"  id='dingji'  style="margin-top: 3px" class="btn btn-w-m btn-info">添加用户权限</button></a>
+                                <li class=""><button type="button"  id='add'  style="margin-top: 3px" class="btn btn-w-m btn-info">添加用户权限</button></a>
                                 </li>
                                 
                             </ul>
@@ -99,7 +145,7 @@
 										<td class=" "  >{$vo.zu}</td> 
 										<td class=" " >
 										<span style='cursor: pointer; ' onclick='del(this,{$vo.uid})' class="label label-danger">删除</span>
-										<span style='cursor: pointer; '  onclick="edit({$vo.id},'{$vo.title}')" class="label label-warning">修改权限</span>																				
+										<span style='cursor: pointer; '  onclick="edit({$vo.uid})" class="label label-warning">修改权限</span>																				
 										</td>
 									</tr>
 									</foreach>
@@ -133,25 +179,13 @@
 
 <script>
 	function add()
-	{
-		var title = $('#title').val();
-		var type = $('#type').val();
-
-		var url = '';		
-
-		if(type==0)
-		{
-			url = "{:U('Admin/insert')}";
-		}
-		else
-		{
-			url = "{:U('Admin/update')}";
-		}
-
+	{			
+		var url = "{:U('Admin/insert')}";
+		
 		$.ajax({
 			   type: "POST",
 			   url: url,
-			   data: $("form").serialize(),
+			   data: $("form").eq(0).serialize(),
 			   dataType:'json',
 			   success: function(obj){
 			    	if(obj.status==1)
@@ -182,30 +216,105 @@
 			   }
 			});
 	}
-	$('#dingji').click(function(){
-		$('#title').val('');
-		$('#name').val('');
-		$('#id').val('');
-		$('#type').val(0);
-		$('#pid').val(0);
+
+	$('#add').click(function(){
 		$('#myModal5').modal('show');
 	})
-
 	
-	function edit(id,title)
-	{
-		$('#id').val(id);
-		$('#title').val(title);
-		$('#type').val(1);
-		$('#myModal5').modal('show');
+	function edit(id)
+	{    
+
+		$.ajax({
+			   type: "POST",
+			   url: "{:U('Admin/edit')}",
+			   data: {id:id},
+			   dataType:'json',
+			   success: function(obj){
+			   		$('#myModal5_edit .group').empty();
+
+			   		html = '';
+ 					
+ 					for(var item in obj)
+ 					{     	                                     
+ 						if(obj[item].is_check==1)
+ 						{
+ 							
+							html+='<label class="">';
+ 							html+='<div class="icheckbox_square-green " style="position: relative;">';
+ 							html+='<input type="checkbox" value="'+obj[item].id+'" checked="checked" name="rules[]" style="position: absolute; opacity: 0;">';
+ 							html+='<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>';
+ 							html+='</div>';
+ 							html+='<i></i>';
+ 							html+=obj[item].title;
+ 							html+='</label>';
+	                  
+ 						}
+ 						else
+ 						{
+	 					
+	 						html+='<label class="">';
+ 							html+='<div class="icheckbox_square-green" style="position: relative;">';
+ 							html+='<input type="checkbox" value="'+obj[item].id+'" name="rules[]" style="position: absolute; opacity: 0;">';
+ 							html+='<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>';
+ 							html+='</div>';
+ 							html+='<i></i>';
+ 							html+=obj[item].title;
+ 							html+='</label>';
+ 						}
+ 					}
+ 					
+ 					$('#myModal5_edit .group').append(html);
+ 						$('.i-checks').iCheck({
+				            checkboxClass: 'icheckbox_square-green',
+				            radioClass: 'iradio_square-green',
+				        });
+ 					$('#id').val(id);
+ 					
+			   }
+			});
+		$('#myModal5_edit .form-control').val(id);
+		$('#myModal5_edit').modal('show');
+
 	}
 
-    $(document).ready(function () {
-        $('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green',
-        });
-    });
+	function update()
+	{
+		var url = "{:U('Admin/update')}";
+		
+		$.ajax({
+			   type: "POST",
+			   url: url,
+			   data: $("form").eq(1).serialize(),
+			   dataType:'json',
+			   success: function(obj){
+			    	if(obj.status==1)
+			    	{	
+		    		swal({
+						  title: obj.msg,
+						  text: "",
+						  icon: "success",
+						  button: "确定",							  
+						},function(){
+							location.reload();
+						});
+			    	}
+			    	else
+			    	{
+			    		swal({
+							  title: obj.msg,
+							  text: "",
+							  icon: "success",
+							  button: "确定",
+							  
+							});
+			    	}
+			    	
+			    	
+			   }
+			});
+	}
+
+    
 
 	function del(obj,id)
 	{
@@ -250,6 +359,8 @@
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green',
         });
+
+        
     });
 
 

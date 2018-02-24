@@ -184,6 +184,7 @@ class GroupController extends AuthController
 			
 			$this->assign('group_data',$group_data);
 			$this->assign('result',$result);
+		
 			$this->display();
 		}
 	}

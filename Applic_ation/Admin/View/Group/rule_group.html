@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
 	<include file="Public:head" title="权限分配"/>
+    <style type="text/css">
+
+    table{margin:0px;}
+    </style>
 </head>
 <body>
 	<div class="row">
@@ -21,17 +25,22 @@
                     </table>
                     <else/>
                     <form action="{:U('Group/rule_group')}" method="post">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" style="margin-top: 30px;">
                             <tbody>
                                 <foreach name='result' item='vo'>
                                 <tr class='b-group'>                              
                                     <td width="10%">
-                                    <label>{$vo.title}&nbsp;<input type="checkbox" name='rule_ids[]' <if condition="in_array($vo['id'],$group_data['rules'])">checked="checked"</if> value="{$vo.id}" onclick="checkAll(this)"  ></label>
+                                    <label >{$vo.title}&nbsp;<input type="checkbox"  name='rule_ids[]' <if condition="in_array($vo['id'],$group_data['rules'])">checked="checked"</if> value="{$vo.id}" onclick="checkAll(this)"  ></label>
                                     </td> 
                             
                                     <td>     
-                                        <foreach name='vo.children' item='two'>                                       
-                                        <table class="table table-bordered">
+                                        <foreach name='vo.children' item='two' key='k'> 
+                                        <if condition='$k eq 0'>
+                                            <table class="table table-bordered" style="margin:0px;">
+                                        <else/>
+                                            <table class="table table-bordered" style="margin-top:10px;margin-bottom: 0px">
+                                        </if>                                     
+                                        
                                             <tbody>
                                                 <tr class="b-group">                              
                                                     <td width="10%">

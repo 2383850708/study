@@ -6,6 +6,7 @@ class AuthController extends Controller
 {
 	protected function _initialize()
 	{
+		
 		if(empty(session('user')))
 		{
 			//$this->error('请先登陆！',U('Login/index'), C('LONG_JUMP_TIME'));	
@@ -72,6 +73,20 @@ class AuthController extends Controller
                 break;
         }
         return $type;
+    }
+
+    /**
+     * 格式化输出数据
+     * @param  $arr  输出数组
+     * @Author   wyk
+     * @DateTime 2018-02-22
+     */
+    public function pre($arr)
+    {
+        echo '<pre>';
+        print_r($arr);
+        echo '<pre>';
+        exit;
     }
 
     /**

@@ -24,7 +24,7 @@ return array(
 		//'/^uu\/(\d{2})\/(\d{2})$/'=>'User/   ?id=:1&name=:2',
 	),
 	'LONG_JUMP_TIME'=>3,
-
+	
 	'AUTH_CONFIG'=>array(  
         'AUTH_ON' => true, //认证开关  
         'AUTH_TYPE' => 1, // 认证方式，1为时时认证；2为登录认证。  
