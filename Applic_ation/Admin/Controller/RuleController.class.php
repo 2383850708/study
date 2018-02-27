@@ -13,6 +13,7 @@ class RuleController extends AuthController
 
     public function insert()
     {
+       // parent::pre(I('post.'));
     	$model = D('AuthRule');
     	$data = array();
 		if($model->create(I('POST.'),1))

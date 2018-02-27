@@ -33,6 +33,7 @@
 	         			<div class="hr-line-dashed"></div>
 	         			<input type='hidden' name='pid' id='pid' value='0'>
 	         			<input type='hidden'  id='type' value='0'>
+	         			<input type='hidden' name='level' id='level' value='0'>
 	         			<input type='hidden'  id='id' name='id' value=''>
 	         		</form>
             	</div>
@@ -87,7 +88,7 @@
                                         		<input id="checkbox1" <if condition='$vo.status eq 1'>checked="checked"</if> type="checkbox">
 											</td> 
 											<td class=" " >
-											<span style='cursor: pointer; '  onclick="subjiedian_add({$vo.id},'{$vo.title}','{$vo.name}')" class="label label-primary">添加子节点</span>
+											<span style='cursor: pointer; '  onclick="subjiedian_add({$vo.id},'{$vo.title}','{$vo.name}',{$vo.level})" class="label label-primary">添加子节点</span>
 											<span style='cursor: pointer; '  onclick="edit({$vo.id},{$vo.pid},'{$vo.title}','{$vo.name}')" class="label label-warning">修改</span>
 											<span style='cursor: pointer; ' onclick='del(this,{$vo.id})' class="label label-danger">删除</span>
 											</td>
@@ -125,6 +126,7 @@
 		var name = $('#name').val();
 		var title = $('#title').val();
 		var type = $('#type').val();
+
 
 		var url = '';
 		if(title.length==0)
@@ -183,13 +185,15 @@
 		$('#title').val('');
 		$('#name').val('');
 		$('#id').val('');
+		$('#level').val(0);
 		$('#type').val(0);
 		$('#pid').val(0);
 		$('#myModal5').modal('show');
 	})
 
-	function subjiedian_add(pid,title,name)
+	function subjiedian_add(pid,title,name,level)
 	{
+		$('#level').val(level+1);
 		$('#title').val('');
 		$('#name').val('');
 		$('#id').val('');
