@@ -9,30 +9,14 @@ class IndexController extends AuthController {
     	$condition['status'] = 1;
 		$menu_list = M('auth_rule')->where($condition)->select();
 
-		$menu = $this->get_attr($menu_list);
+		$menu = parent::get_attr($menu_list);
 		$rule = $this->get_auth_name();
-		//$menu = $this->get_auth_menu($menu,$rule);
-
-		parent::pre($menu);
-
-		$this->assign($assign);
+		$menu_arr = $this->get_auth_menu($menu,$rule);
+		$this->assign('menu_arr',$menu_arr);
 		//print_r($assign);exit;
 		$this->display();
     }
 
-    function get_attr($a,$pid=0){  
-        $tree = array();                                //每次都声明一个新数组用来放子元素  
-        foreach($a as $v){  
-            if($v['pid'] == $pid){                      //匹配子记录  
-                $v['children'] = $this->get_attr($a,$v['id']); //递归获取子记录  
-                if($v['children'] == null){  
-                    unset($v['children']);             //如果子元素为空则unset()进行删除，说明已经到该分支的最后一个元素了（可选）  
-                }  
-                $tree[] = $v;                           //将记录存入新数组  
-            }  
-        }  
-        return $tree;                                 //返回新数组  
-    } 
 
 
     /**
@@ -44,16 +28,17 @@ class IndexController extends AuthController {
      */
     function get_auth_menu($arr,$rule)
     {
+    	
     	foreach ($arr as $key => $value) 
     	{
-    		if(!in_array($value['name'], $rule))
+    		if(!in_array($value['id'], $rule))
     		{
     			unset($arr[$key]);
     			continue;
     		}
     		foreach ($value['children'] as $k => $v) 
     		{
-    			if(!in_array($v['name'], $rule))
+    			if(!in_array($v['id'], $rule))
 	    		{
 	    			unset($arr[$key]['children'][$k]);
 	    			continue;
@@ -61,6 +46,7 @@ class IndexController extends AuthController {
     		}
     	}
     	return $arr;
+
     }
 
     /**
@@ -70,7 +56,6 @@ class IndexController extends AuthController {
      */
     function get_auth_name()
     {
-    	$rule = array();
     	$loginInfo = parent::getLoginInfo();
     
     	$group_access = M('auth_group_access')->query('select GROUP_CONCAT(group_id) as  group_id from  '.C('DB_PREFIX').'auth_group_access where uid='.$loginInfo['user_id'].' group by uid');
@@ -79,18 +64,18 @@ class IndexController extends AuthController {
     	$condition = array();
     	$condition['id'] = array('in',$group_access);
     	$auth_group = M('auth_group')->where($condition)->select();
-    	$quanxina = '';
+    	$rule = '';
+
     	if($auth_group)
     	{
     		foreach ($auth_group as $key => $value) {
-    			$quanxina .= $value['rules'].',';
+    			$rule .= $value['rules'].',';
     		}
-    		$quanxina = explode(',',rtrim($quanxina,','));
+
+    		$rule = array_unique(explode(',',rtrim($rule,',')));
     	}
 
-
-
-    	parent::pre($quanxina);
+    	return $rule;
 
     }
 
