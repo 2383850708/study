@@ -13,6 +13,7 @@ return array(
     'DB_PWD'    => 'qwaszX3079416', // 密码
     'DB_PORT'   => 3306, // 端口
     'DB_PREFIX' => 'think_', // 数据库表前缀 
+    'DEFAULT_FILTER' => 'htmlspecialchars,stripslashes,trim',
     // 开启路由
 	'URL_ROUTER_ON'   => false, 
 	'URL_ROUTE_RULES'=>array(

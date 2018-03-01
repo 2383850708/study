@@ -31,6 +31,12 @@ class IndexController extends AuthController {
     	
     	foreach ($arr as $key => $value) 
     	{
+    		if($value['title']=='后台首页')
+    		{
+    			unset($arr[$key]);
+    			continue;
+    		}
+
     		if(!in_array($value['id'], $rule))
     		{
     			unset($arr[$key]);
